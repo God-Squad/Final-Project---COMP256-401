@@ -28,4 +28,12 @@ public class PlayerMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Gap")
+        {
+            Debug.Log("reward");
+        }
+    }
 }

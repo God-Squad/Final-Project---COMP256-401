@@ -4,6 +4,7 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject wallPrefab;
+    public GameObject gapPrefab;
     public float spawnTimer = 3;
     public Vector3 spawnLocation;
     public float maxGap = 2.5f;
@@ -41,6 +42,12 @@ public class LevelGenerator : MonoBehaviour
         float yScale = levelHeight - (height + gap);
         topWall.transform.localScale = new Vector3(10f, yScale, 0.5f);
         topWall.transform.position = new Vector3(topWall.transform.position.x, 10 - yScale / 2, topWall.transform.position.z);
+
+        // y pos = (bottom wall height + gap / 2) + bottom wall y pos
+
+        GameObject gapObj = Instantiate(gapPrefab, spawnLocation, gapPrefab.transform.rotation);
+        gapObj.transform.localScale = new Vector3(10f, gap, 0.5f);
+        gapObj.transform.position = new Vector3(gapObj.transform.position.x, height + gap / 2, gapObj.transform.position.z);
 
     }
 

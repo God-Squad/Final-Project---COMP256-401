@@ -375,10 +375,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallPrefab: {fileID: 1319638599380519808, guid: 67b08ce62fcec0d4b8e8efcc052ec714,
     type: 3}
-  spawnTimer: 3
+  gapPrefab: {fileID: 3230780971967448669, guid: e7e7df0ab41f14941ba9a4530e63cb62,
+    type: 3}
+  spawnTimer: 2
   spawnLocation: {x: 0, y: 0, z: 0}
-  maxGap: 5
-  minGap: 3
+  maxGap: 2.5
+  minGap: 1.5
   maxHeight: 4
   minHeight: 1
   levelHeight: 10
