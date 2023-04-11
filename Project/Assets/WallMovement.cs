@@ -9,9 +9,5 @@ public class WallMovement : MonoBehaviour
     {
         transform.Translate(Vector3.back * speed * Time.deltaTime);
 
-        if (transform.position.z < -5.5f)
-        {
-            Destroy(gameObject);
-        }
     }
 }

@@ -32,6 +32,7 @@ TagManager:
   - tile
   - Wall
   - Gap
+  - Obstacle
   layers:
   - Default
   - TransparentFX

@@ -1,10 +1,10 @@
-using System.Collections;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject wallPrefab;
     public GameObject gapPrefab;
+    public GameObject obstacleParent;
     public float spawnTimer = 3;
     public Vector3 spawnLocation;
     public float maxGap = 2.5f;
@@ -16,38 +16,37 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         spawnLocation = new Vector3(0, 0f, 15);
-        StartCoroutine(StartLevelGeneration());
-
-    }
-
-    IEnumerator StartLevelGeneration()
-    {
-        while (true)
+        for (int i = 0; i < 8; i++)
         {
-            SpawnWall();
-            yield return new WaitForSeconds(spawnTimer);
+            SpawnWall(15 + i * 8);
         }
+
     }
 
-    public void SpawnWall()
+
+    public void SpawnWall(float zPos)
     {
         float height = CalculateHeight();
         float gap = CalculateGap();
         // y pos = y scale / 2
         GameObject bottomWall = Instantiate(wallPrefab, spawnLocation, wallPrefab.transform.rotation);
+        bottomWall.transform.SetParent(obstacleParent.transform, false);
         bottomWall.transform.localScale = new Vector3(10f, height, 0.5f);
-        bottomWall.transform.position = new Vector3(bottomWall.transform.position.x, height / 2, bottomWall.transform.position.z);
+        bottomWall.transform.position = new Vector3(bottomWall.transform.position.x, height / 2, zPos);
+
         // y pos = 10 - y scale / 2
         GameObject topWall = Instantiate(wallPrefab, spawnLocation, wallPrefab.transform.rotation);
         float yScale = levelHeight - (height + gap);
+        topWall.transform.SetParent(obstacleParent.transform, false);
         topWall.transform.localScale = new Vector3(10f, yScale, 0.5f);
-        topWall.transform.position = new Vector3(topWall.transform.position.x, 10 - yScale / 2, topWall.transform.position.z);
+        topWall.transform.position = new Vector3(topWall.transform.position.x, 10 - yScale / 2, zPos);
 
         // y pos = (bottom wall height + gap / 2) + bottom wall y pos
 
         GameObject gapObj = Instantiate(gapPrefab, spawnLocation, gapPrefab.transform.rotation);
+        gapObj.transform.SetParent(obstacleParent.transform, false);
         gapObj.transform.localScale = new Vector3(10f, gap, 0.5f);
-        gapObj.transform.position = new Vector3(gapObj.transform.position.x, height + gap / 2, gapObj.transform.position.z);
+        gapObj.transform.position = new Vector3(gapObj.transform.position.x, height + gap / 2, zPos);
 
     }
 
