@@ -16,11 +16,18 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         spawnLocation = new Vector3(0, 0f, 15);
-        for (int i = 0; i < 8; i++)
+
+
+    }
+
+    public void GenerateObstacles()
+    {
+        for (int i = 0; i < obstacleParent.transform.childCount; i++)
         {
-            SpawnWall(15 + i * 8);
+            Destroy(obstacleParent.transform.GetChild(i).gameObject);
         }
 
+        SpawnWall(8);
     }
 
 

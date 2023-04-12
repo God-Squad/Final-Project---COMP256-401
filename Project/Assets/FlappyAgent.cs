@@ -6,8 +6,9 @@ using UnityEngine;
 public class FlappyAgent : Agent
 {
     private Rigidbody agentRigidbody;
-    public int rewards;
     public GameObject obstacles;
+    public LevelGenerator levelGenerator;
+    public GameObject[] walls;
 
     private void Awake()
     {
@@ -16,32 +17,35 @@ public class FlappyAgent : Agent
 
     private void Update()
     {
-        if (obstacles.transform.position.z < -55f)
+        if (obstacles.transform.position.z < -29f)
+        {
+            Debug.Log(GetCumulativeReward());
             EndEpisode();
+        }
     }
 
     public override void OnEpisodeBegin()
     {
-        rewards = 0;
         obstacles.transform.position = Vector3.zero;
         transform.position = new Vector3(0, 5, 0);
+        levelGenerator.GenerateObstacles();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(this.transform.localPosition);
-        //agent vel
+        sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(agentRigidbody.velocity.y);
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obstacle in obstacles)
+        for (int i = 0; i < obstacles.transform.childCount; i++)
         {
-            sensor.AddObservation(obstacle.transform);
+            if (obstacles.transform.GetChild(i).gameObject.tag == "Gap")
+            {
+                sensor.AddObservation(obstacles.transform.GetChild(i).localPosition.y);
+                sensor.AddObservation(Vector3.Distance(obstacles.transform.GetChild(i).localPosition, transform.localPosition));
+            }
         }
-
-        GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
         foreach (GameObject wall in walls)
         {
-            sensor.AddObservation(wall.transform);
+            sensor.AddObservation(wall.transform.localPosition);
         }
     }
 
@@ -70,20 +74,20 @@ public class FlappyAgent : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == "Obstacle" || collision.gameObject.tag == "Wall")
         {
-            if (rewards > 0)
-                Debug.Log(rewards);
+            if (GetCumulativeReward() > 0)
+                Debug.Log(GetCumulativeReward());
             EndEpisode();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Gap")
         {
             AddReward(1f);
-            rewards++;
+            EndEpisode();
         }
     }
 }

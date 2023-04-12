@@ -268,8 +268,11 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  rewards: 0
   obstacles: {fileID: 1150887535}
+  levelGenerator: {fileID: 701765084}
+  walls:
+  - {fileID: 760063547}
+  - {fileID: 1614505634}
 --- !u!114 &319396884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 22
+    VectorObservationSize: 12
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -292,7 +295,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 4d80461878cf6fe42be17d6b0428a868, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: Flappy
@@ -433,9 +436,9 @@ MonoBehaviour:
   spawnTimer: 2
   spawnLocation: {x: 0, y: 0, z: 0}
   maxGap: 3
-  minGap: 2
-  maxHeight: 4
-  minHeight: 1
+  minGap: 3
+  maxHeight: 5
+  minHeight: 2
   levelHeight: 10
 --- !u!4 &701765085
 Transform:
