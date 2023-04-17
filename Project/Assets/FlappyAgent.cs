@@ -17,7 +17,7 @@ public class FlappyAgent : Agent
 
     private void Update()
     {
-        if (obstacles.transform.position.z < -29f)
+        if (obstacles.transform.position.z < -15f)
         {
             Debug.Log(GetCumulativeReward());
             EndEpisode();
@@ -27,7 +27,7 @@ public class FlappyAgent : Agent
     public override void OnEpisodeBegin()
     {
         obstacles.transform.position = Vector3.zero;
-        transform.position = new Vector3(0, 5, 0);
+        //transform.position = new Vector3(0, 5, 0);
         levelGenerator.GenerateObstacles();
     }
 
@@ -87,7 +87,7 @@ public class FlappyAgent : Agent
         if (other.gameObject.tag == "Gap")
         {
             AddReward(1f);
-            EndEpisode();
+            //EndEpisode();
         }
     }
 }
